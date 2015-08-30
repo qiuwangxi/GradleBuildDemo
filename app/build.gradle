@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.qiu.gradlebuilddemo"
+        minSdkVersion 19
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        /*release {
+            storeFile file("?")//如 release.keystore（文件放在module根目录）
+            storePassword "?"
+            keyAlias "?"
+            keyPassword "?"
+        }*/
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.release
+        }
+    }
+
+    /*编译选项，production为正式发布，development为测试使用，调试时请在Build Variant使用developmentDebug编译*/
+    productFlavors {
+
+        development {
+            applicationId "com.qiu.gradlebuilddemo.dev"
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "development"]
+        }
+
+        production {
+            applicationId "com.qiu.gradlebuilddemo"
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "production"]
+        }
+
+        /*GooglePlay {}
+        Store360 {}
+        WanDouJia {}
+        BaiDu {}
+        Store91 {}
+        xiaomi {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }*/
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.1'
+}
